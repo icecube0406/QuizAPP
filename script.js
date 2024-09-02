@@ -55,15 +55,25 @@ let questions = [
 
     function showQuestion(){
        let question = questions[currentQuestion];
-       let answer_1 = questions[currentAnswer_1];
-       let answer_2 = questions[currentAnswer_2];
-       let answer_3 = questions[currentAnswer_4];
-       let answer_4 = questions[currentAnswer_4];
 
        
        document.getElementById('questiontext').innerHTML = question['question'];
-       document.getElementById('answer_1').innerHTML = answer_1['answer_1'];
-       document.getElementById('answer_2').innerHTML = answer_2['answer_2'];
-       document.getElementById('answer_3').innerHTML = answer_3['answer_3'];
-       document.getElementById('answer_4').innerHTML = answer_4['answer_4'];
+       document.getElementById('answer_1').innerHTML = question['answer_1'];
+       document.getElementById('answer_2').innerHTML = question['answer_2'];
+       document.getElementById('answer_3').innerHTML = question['answer_3'];
+       document.getElementById('answer_4').innerHTML = question['answer_4'];
+    }
+
+    function answer(selection){
+      let question = questions[currentQuestion];
+      console.log('Selected answer is ', selection)
+      let selectedQuestionNumber = selection.slice(-1);
+      console.log('selectedQuestionNumber is ', selectedQuestionNumber)
+      console.log('Current question is ',question['right_answer'])
+    
+      if(selectedQuestionNumber == question['right_answer']) {
+        console.log('Richtige Antwort!!');
+      } else {
+        console.log('Falsche Antwort!!!')
+      }
     }
