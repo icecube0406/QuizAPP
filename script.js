@@ -41,11 +41,9 @@ let questions = [
       }
     ];
 
+    let rightQuestions = 0;
+
     let currentQuestion = 0;
-    let currentAnswer_1 = 0;
-    let currentAnswer_2 = 0;
-    let currentAnswer_3 = 0;
-    let currentAnswer_4 = 0;
 
     function init(){
         document.getElementById('all-questions').innerHTML = questions.length;
@@ -54,31 +52,60 @@ let questions = [
     };
 
     function showQuestion(){
-       let question = questions[currentQuestion];
 
+       if (currentQuestion >= questions.length) {
+         //TODO show End Screen, abgleichen mit den Zahlenmengen
+         document.getElementById('endScreen').style = '';
+         document.getElementById('questionBody').style = 'display: none';
+
+         document.getElementById('amount-of-questions').innerHTML = questions.length;
+         document.getElementById('amount-of-right-questions').innerHTML = rightQuestions;
+        } else {
+
+       let question = questions[currentQuestion];
        
+       document.getElementById('question-number').innerHTML = currentQuestion +1; //Zugriff auf die erste nummer (1 von % Fragen)
        document.getElementById('questiontext').innerHTML = question['question'];
        document.getElementById('answer_1').innerHTML = question['answer_1'];
        document.getElementById('answer_2').innerHTML = question['answer_2'];
        document.getElementById('answer_3').innerHTML = question['answer_3'];
        document.getElementById('answer_4').innerHTML = question['answer_4'];
+      }
     }
 
     function answer(selection){
       let question = questions[currentQuestion];
-      console.log('Selected answer is ', selection);
       let selectedQuestionNumber = selection.slice(-1);
-      console.log('selectedQuestionNumber is ', selectedQuestionNumber);
-      console.log('Current question is ',question['right_answer']);
-
       let idofRightAnswer = `answer_${question['right_answer']}`;
     
-      if(selectedQuestionNumber == question['right_answer']) {
-        console.log('Richtige Antwort!!');
+      if(selectedQuestionNumber == question['right_answer']) { //Richtige Frage beantwortet
         document.getElementById(selection).parentNode.classList.add('bg-success');
+        rightQuestions++;
       } else {
         document.getElementById(selection).parentNode.classList.add('bg-danger');
         document.getElementById(idofRightAnswer).parentNode.classList.add('bg-success');
       }
       document.getElementById('next-button').disabled = false;
     }
+
+    function nextQuestion(){
+      currentQuestion++; //z.B. von 0 auf 1
+      document.getElementById('next-button').disabled = true; //der blaue button wird wieder disabled
+      resetAnswerButton(); // vor der nächsten Frage, werden die Farben in den Antwortfelder gelöscht
+      showQuestion(); //Nächste Frage wird aufgerufen
+    }
+    
+    function resetAnswerButton(){
+      document.getElementById('answer_1').parentNode.classList.remove('bg-danger');
+      document.getElementById('answer_1').parentNode.classList.remove('bg-success');
+      document.getElementById('answer_2').parentNode.classList.remove('bg-danger');
+      document.getElementById('answer_2').parentNode.classList.remove('bg-success');
+      document.getElementById('answer_3').parentNode.classList.remove('bg-danger');
+      document.getElementById('answer_3').parentNode.classList.remove('bg-success');
+      document.getElementById('answer_4').parentNode.classList.remove('bg-danger');
+      document.getElementById('answer_4').parentNode.classList.remove('bg-success');
+    }
+    
+    
+    
+    // Video 18 fertig
